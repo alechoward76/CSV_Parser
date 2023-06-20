@@ -43,13 +43,18 @@ while 1 == 1:
             print("\n")
             print("Enter Column Name to Add \n")
             columnName = input()
+
+            # Throw if the columnName is invalid
             testValid = df[columnName]
-            selected_columns.append(columnName)
+
+            # Check if Column is already selected
+            if columnName in selected_columns:
+                print("\nColumn Already Selected!")
+            else:
+                selected_columns.append(columnName)
             print("\nSelected Column(s) " + str(selected_columns) + "\n")
         except:
             print("INVALID COLUMN NAME\n")
-
-            print("INVALID SELECTION: Reselect Columns \n")
 
     # Count occurences of a specific item in a specific column
     elif userInput == "2":
