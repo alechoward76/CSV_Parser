@@ -29,7 +29,8 @@ while 1 == 1:
     print("\nEnter a Number to Select an Option: \n")
     print("1. Add Column")
     print("2. Count Occurrences of an Item in Specific Column")
-    print("3. Exit & Export")
+    print("3. Change Index and/or Remove Duplicates")
+    print("4. Exit & Export")
     userInput = input()
 
     # Add Column to Excel Sheet
@@ -48,10 +49,11 @@ while 1 == 1:
             testValid = df[columnName]
 
             # Check if Column is already selected
-            if columnName in selected_columns:
-                print("\nColumn Already Selected!")
-            else:
+            if columnName not in selected_columns:
                 selected_columns.append(columnName)
+            else:
+                print("\nYou Already Selected this Column!")
+
             print("\nSelected Column(s) " + str(selected_columns) + "\n")
         except:
             print("INVALID COLUMN NAME\n")
@@ -82,21 +84,31 @@ while 1 == 1:
                 break
         except:
             print("INVALID: Retry\n")
-    # Exit & Export
+
+    # TODO Index
     elif userInput == "3":
+        # show all columns
+        print("\nColumns: \n")
+        print(df.columns)
+
+        # Select Index Col
+        print("\nEnter Column to Index By: \n")
+        ind = input()
+        df.set_index(ind)
+        # Drop Duplicates?
+        print("\nWould you like to drop duplicates and NANs? (y/n) \n")
+        choice = input()
+        if choice == "y":
+            df.drop_duplicates().dropna
+        print(df[selected_columns] + "\n")
+
+    # Exit & Export
+    elif userInput == "4":
         try:
-            # pull dataframe data from the selected columns, choice of dropping data
-            print("\nWould you like to drop duplicates and NANs? (y/n) \n")
-            choice = input()
-            if choice == "y":
-                subset_data = df[selected_columns].drop_duplicates().dropna()
-            elif choice == "n":
-                subset_data = df[selected_columns]
-
+            # pull dataframe data from the selected columns
+            subset_data = df[selected_columns]
             print(subset_data)
-            print("\n")
-
-            print("Would You Like to Export to Excel? (y/n)\n")
+            print("\nWould You Like to Export to Excel? (y/n)\n")
             choose = input()
             if choose == "y":
                 # Export subset data to excel file
