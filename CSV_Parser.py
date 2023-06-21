@@ -123,23 +123,29 @@ while 1 == 1:
             print("\nWould You Like to Export to Excel? (y/n)\n")
             choose = input()
             if choose == "y":
-                # Export subset data to excel file
-                print("\nEnter xlsx File Name to Output to (including extension) ")
-                outputFile = input()
-                subset_data.to_excel(
-                    r"C:\Users\amh3097\Documents\\" + outputFile, index=False
-                )
-                print("\nCheck your Documents Folder ( ͡° ͜ʖ ͡°)\n")
-                break
-            else:
+                try:
+                    # Export subset data to excel file
+                    print("\nEnter xlsx File Name to Output to (including extension) ")
+                    outputFile = input()
+                    subset_data.to_excel(
+                        r"C:\Users\\" + userName + "\\Documents" + "\\" + outputFile,
+                        index=False,
+                    )
+                    print("\nCheck your Documents Folder ( ͡° ͜ʖ ͡°)\n")
+                    break
+                except:
+                    print("\nInvalid File Name")
+            elif choose == "n":
                 print("\nGoodbye! (´^ω^)ノ\n")
                 break
+            else:
+                print("\nInvalid Option\n")
 
         except:
             # Reset Selection Process if an Invalid Column is Provided
-            selected_columns = []
+            print("How did you get here?")
 
     # Invalid Option
     else:
-        print("Invalid Option \n")
+        print("\nInvalid Option \n")
 # END WHILE LOOP
