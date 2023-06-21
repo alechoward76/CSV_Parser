@@ -29,7 +29,9 @@ while 1 == 1:
     print("\nEnter a Number to Select an Option: \n")
     print("1. Add Column")
     print("2. Count Occurrences of an Item in Specific Column")
-    print("3. Change Index and/or Remove Duplicates")
+    print(
+        "3. Remove Duplicate Rows or Rows containing NaNs from Dataframe of Selected Columns"
+    )
     print("4. Exit & Export")
     userInput = input()
 
@@ -84,23 +86,33 @@ while 1 == 1:
                 break
         except:
             print("INVALID: Retry\n")
-
-    # TODO Index
+    # Remove Duplicates / NaNs
     elif userInput == "3":
-        # show all columns
-        print("\nColumns: \n")
-        print(df.columns)
+        print("\n")
+        print("Untrimmed Dataframe: ")
+        print(df[selected_columns])
+        print("\n")
+        # Select Choice
+        print("\nSelect a Number to Continue: \n")
+        print("1. Remove Duplicate Rows")
+        print(
+            "2. Remove Rows Containing NaNs (WARNING: Any Row Containing a NaN Will be Erased from Dataframe)"
+        )
+        print("3. Exit")
+        option = input()
 
-        # Select Index Col
-        print("\nEnter Column to Index By: \n")
-        ind = input()
-        df.set_index(ind)
-        # Drop Duplicates?
-        print("\nWould you like to drop duplicates and NANs? (y/n) \n")
-        choice = input()
-        if choice == "y":
-            df.drop_duplicates().dropna
-        print(df[selected_columns] + "\n")
+        # Remove Duplicates
+        if option == "1":
+            df = df.drop_duplicates()
+        # Remove NaN
+        elif option == "2":
+            df = df.dropna()
+        # Exit
+        else:
+            continue
+        print("\n")
+        print(df[selected_columns])
+        print("\n")
 
     # Exit & Export
     elif userInput == "4":
