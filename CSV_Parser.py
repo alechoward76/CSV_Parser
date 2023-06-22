@@ -83,6 +83,7 @@ while 1 == 1:
             print("Quit Without Exporting? (y/n) \n")
             userChoice = input()
             if userChoice == "y":
+                print("\nGoodbye! (´^ω^)ノ\n")
                 break
         except:
             print("INVALID: Retry\n")
