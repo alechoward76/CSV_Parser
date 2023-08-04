@@ -6,7 +6,7 @@
 
 
 import argparse
-import pandas
+import pandas as pd
 
 
 def main():
@@ -17,28 +17,50 @@ def main():
     parser.add_argument("positional_arg", type=str, help="name of csv file")
 
     # What is the difference between these two?v
-    """
+
     parser.add_argument(
-        "-o", "--optional arg", type=int, default=0, help="Description of optional arg"
+        "-a", "--optional arg", type=str, help="Description of optional arg"
     )
-    """
+
     parser.add_argument(
         "--flag", action="store_true", help="Description of a flag option"
+    )
+    parser.add_argument(
+        "--count",
+        nargs=2,
+        help="Optional argument to count number of specific entries in a column. Format: 'Column' 'Entry'",
+    )
+
+    parser.add_argument(
+        "values",
+        nargs="*",
+        help="Input columns to add to the output document. Format: 'Column'",
     )
 
     # Parse the command line arguments
     args = parser.parse_args()
     try:
-        # Access and use the parsed args
-        print("Positional Argument: ", args.positional_arg)
+        # Read file
+        df = pd.read_csv(args.positional_arg)
 
-        print("Flag Option: ", args.flag)
+        # Add Column to Excel Sheet
+
+        # Access and use the parsed args
+        # print("Positional Argument: ", args.positional_arg)
+
+        # print("Flag Option: ", args.flag)
 
         # Add logic based on parsed args
         if args.flag:
             print("Flag is set!")
         else:
             print("Flag is not set.")
+
+        # Save columns to doc
+        if args.values:
+            print("Input Values:", args.values)
+            columns = df[args.values]
+            columns.to_excel("output.xlsx")
         """
         if hasattr(args, "optional arg"):
             result = args.optional_arg * 2
