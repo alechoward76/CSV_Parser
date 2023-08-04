@@ -56,6 +56,13 @@ def main():
         else:
             print("Flag is not set.")
 
+        if args.count:
+            # count_list= args.count
+            col = str(args.count[0])
+            entry = str(args.count[1])
+            item_counts = df[col].value_counts()[entry]
+            print(item_counts + " Ocurrances")
+
         # Save columns to doc
         if args.values:
             print("Input Values:", args.values)
