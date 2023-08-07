@@ -16,8 +16,6 @@ def main():
     # Define command line arguments
     parser.add_argument("positional_arg", type=str, help="name of csv file")
 
-    # What is the difference between these two?v
-
     parser.add_argument(
         "-a", "--optional arg", type=str, help="Description of optional arg"
     )
@@ -57,11 +55,11 @@ def main():
             print("Flag is not set.")
 
         if args.count:
-            # count_list= args.count
-            col = str(args.count[0])
-            entry = str(args.count[1])
+            col = args.count[0]
+            entry = args.count[1]
+
             item_counts = df[col].value_counts()[entry]
-            print(item_counts + " Ocurrances")
+            print(str(item_counts) + " Ocurrances")
 
         # Save columns to doc
         if args.values:
