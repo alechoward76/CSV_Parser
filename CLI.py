@@ -48,7 +48,7 @@ def main():
 
         # Remove Duplicate Rows
         if args.remove:
-            df = df.drop_duplicates()
+            df = df.drop_duplicates(keep="first")
             print("Duplicate rows (if any) removed!")
 
         # Remove Rows containing NaNs
