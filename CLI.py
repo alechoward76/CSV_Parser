@@ -11,49 +11,52 @@ import pandas as pd
 
 def main():
     # Create Parser
-    parser = argparse.ArgumentParser(description="A tool for parsing csv files")
+    parser = argparse.ArgumentParser(description="A tool for parsing CSV files")
 
     # Define command line arguments
-    parser.add_argument("positional_arg", type=str, help="name of csv file")
+    parser.add_argument("CSV", type=str, help="Name of csv file to parse")
 
     parser.add_argument(
-        "-a", "--optional arg", type=str, help="Description of optional arg"
+        "-n", "--null", action="store_true", help="Flag to remove rows containing NaNs"
     )
 
     parser.add_argument(
-        "--flag", action="store_true", help="Description of a flag option"
+        "-r",
+        "--remove",
+        action="store_true",
+        help="Flag to remove duplicate rows.",
     )
     parser.add_argument(
+        "-c",
         "--count",
         nargs=2,
         help="Optional argument to count number of specific entries in a column. Format: 'Column' 'Entry'",
     )
 
     parser.add_argument(
-        "values",
+        "-a",
+        "--add",
         nargs="*",
-        help="Input columns to add to the output document. Format: 'Column'",
+        help="Input columns to add to the output document. Format: 'Column'...",
     )
 
     # Parse the command line arguments
     args = parser.parse_args()
     try:
         # Read file
-        df = pd.read_csv(args.positional_arg)
+        df = pd.read_csv(args.CSV)
 
-        # Add Column to Excel Sheet
+        # Remove Duplicate Rows
+        if args.remove:
+            df = df.drop_duplicates()
+            print("Duplicate rows (if any) removed!")
 
-        # Access and use the parsed args
-        # print("Positional Argument: ", args.positional_arg)
+        # Remove Rows containing NaNs
+        if args.null:
+            df = df.dropna()
+            print("Rows containing Null values (if any) removed!")
 
-        # print("Flag Option: ", args.flag)
-
-        # Add logic based on parsed args
-        if args.flag:
-            print("Flag is set!")
-        else:
-            print("Flag is not set.")
-
+        # Count Entries
         if args.count:
             col = args.count[0]
             entry = args.count[1]
@@ -62,19 +65,16 @@ def main():
             print(str(item_counts) + " Ocurrances")
 
         # Save columns to doc
-        if args.values:
-            print("Input Values:", args.values)
-            columns = df[args.values]
+        if args.add:
+            print("Input Values:", args.add)
+            columns = df[args.add]
             columns.to_excel("output.xlsx")
-        """
-        if hasattr(args, "optional arg"):
-            result = args.optional_arg * 2
-            print("Optional Argument: ", args.optional_arg)
-            print("Result ", result)
-        """
+            print("\nCheck your folder ( ͡° ͜ʖ ͡°)\n")
+
     # Error handle
     except Exception as e:
         print(f"An error occurred: {e}")
+        print("\nGoodbye! (´^ω^)ノ\n")
 
 
 if __name__ == "__main__":
